@@ -15,10 +15,43 @@ public class Menu {
 
             switch (Choice){
                 case "1":
-                    //guestMenu();
+                    guestMenu();
                     break;
                 case "2":
                     adminMenu();
+                    break;
+                case "0":
+                    return;
+                default:
+                    System.out.println("invalid input, try again! :)");
+            }
+        }
+    }
+
+
+    public void guestMenu() {
+        while (true) {
+            System.out.println("Welcome to the library: guest");
+            System.out.println("1. View all books");
+            System.out.println("2. view borrowed books");
+            System.out.println("3. borrow books");
+            System.out.println("4. return books");
+            System.out.println("0. Quit");
+
+            String Choice = sc.nextLine();
+
+            switch (Choice) {
+                case "1":
+                    //viewAllBooks();
+                    break;
+                case "2":
+                    //viewBorrowedBooks
+                    break;
+                case "3":
+                    //borrowBooks();
+                    break;
+                case "4":
+                    //returnBooks();
                     break;
                 case "0":
                     return;
@@ -40,7 +73,7 @@ public class Menu {
 
             switch (Choice) {
                 case "1":
-                    //viewBooks();
+                    //viewAllBooks();
                     break;
                 case "2":
                     //addBooks();
