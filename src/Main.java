@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Main{
     public static void main (String[] args){
@@ -11,6 +9,10 @@ public class Main{
         try{
             Connection conn = DriverManager.getConnection(url,user,password);
             System.out.println("connected yay!");
+
+            Menu menu = new Menu();
+            menu.loginMenu();
+
 
 
         }catch (SQLException e){
