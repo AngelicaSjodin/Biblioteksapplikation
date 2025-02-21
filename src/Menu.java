@@ -81,7 +81,7 @@ public class Menu {
                     viewAllBooks();
                     break;
                 case "2":
-                    //addBooks();
+                    addBooks();
                     break;
                 case "3":
                     //removeBooks();
@@ -91,6 +91,31 @@ public class Menu {
                 default:
                     System.out.println("invalid input, try again! :)");
             }
+        }
+    }
+
+    private void addBooks(){
+        System.out.println("Adding the book:");
+
+        System.out.println("Title: ");
+        String title = sc.nextLine();
+
+        System.out.println("Author: ");
+        String author = sc.nextLine();
+
+        System.out.println("Availsble true/false: ");
+        boolean available = Boolean.parseBoolean(sc.nextLine());
+
+        try {
+            boolean success = functions.addBook(title,author,available);
+
+            if (success){
+                System.out.println("book added");
+            }else{
+                System.out.println("failed to add book");
+            }
+        }catch (SQLException e){
+            System.out.println("error while adding book"+ e.getMessage());
         }
     }
 
