@@ -4,6 +4,31 @@ import java.util.ArrayList;
 
 public class Functions {
 
+    public boolean addBook(String title, String author, boolean available) throws SQLException{
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try{
+            conn = Database.getConnection();
+            String query = "INSERT INTO books (title,author,available) VALUES (?,?,?)";
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, title);
+            pstmt.setString(2,author);
+            pstmt.setBoolean(3,available);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            return rowsAffected > 0;
+        }catch (SQLException e){
+            System.out.println("failed to add book" + e.getMessage());
+            return false;
+        }finally {
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
     public List<Books> viewAllBooks() throws SQLException{
         List<Books> bookList = new ArrayList<>();
         Connection conn = null;
