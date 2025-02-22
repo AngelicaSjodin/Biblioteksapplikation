@@ -84,7 +84,7 @@ public class Menu {
                     addBooks();
                     break;
                 case "3":
-                    //removeBooks();
+                    removeBooks();
                     break;
                 case "0":
                     return;
@@ -116,6 +116,23 @@ public class Menu {
             }
         }catch (SQLException e){
             System.out.println("error while adding book"+ e.getMessage());
+        }
+    }
+
+    private void removeBooks(){
+        System.out.println("Enter books id:");
+
+        int bookID = Integer.parseInt(sc.nextLine());
+        try{
+            boolean success = functions.removeBooks(bookID); // hämtar removebooks metoden från functions :))
+
+            if(success){
+                System.out.println("Book is removed :)");
+            }else{
+                System.out.println("failed to remove book");
+            }
+        }catch (SQLException e){
+            System.out.println("error while removing book: "+e.getMessage());
         }
     }
 
