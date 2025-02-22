@@ -18,8 +18,7 @@ public class Menu {
 
             switch (Choice){
                 case "1":
-                    userLogin();
-                    //guestMenu();
+                    guestLogin();
                     break;
                 case "2":
                     adminMenu();
@@ -95,7 +94,22 @@ public class Menu {
         }
     }
 
+    private void guestLogin() throws SQLException{
+        System.out.println("LOGIN");
+        System.out.println("Username: ");
+        String username = sc.nextLine();
 
+        System.out.println("password: ");
+        String password = sc.nextLine();
+
+        boolean checkUser = functions.checkUser(username,password);
+        if(checkUser){
+            System.out.println("login successful :))");
+            guestMenu();
+        }else{
+            System.out.println("invalid name or password plz try again :(");
+        }
+    }
 
     private void addBooks(){
         System.out.println("Adding the book:");
