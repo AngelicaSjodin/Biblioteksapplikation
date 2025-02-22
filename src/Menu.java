@@ -51,7 +51,7 @@ public class Menu {
                     //viewBorrowedBooks
                     break;
                 case "3":
-                    //borrowBooks();
+                    borrowBook();
                     break;
                 case "4":
                     //returnBooks();
@@ -150,6 +150,24 @@ public class Menu {
             }
         }catch (SQLException e){
             System.out.println("error while removing book: "+e.getMessage());
+        }
+    }
+
+    private void borrowBook(){
+        System.out.println("enter the id of the book you want to borrow");
+
+        int bookID = Integer.parseInt(sc.nextLine());
+        int userID = 1;
+
+        try{
+            boolean success = functions.borrowBook(bookID,userID);
+            if(success){
+                System.out.println("you have borrowed the book!");
+            }else{
+                System.out.println("failed to borrow book");
+            }
+        }catch (SQLException e){
+            System.out.println("error "+ e.getMessage());
         }
     }
 
