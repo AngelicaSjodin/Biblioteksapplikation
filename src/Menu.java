@@ -18,7 +18,8 @@ public class Menu {
 
             switch (Choice){
                 case "1":
-                    guestMenu();
+                    userLogin();
+                    //guestMenu();
                     break;
                 case "2":
                     adminMenu();
@@ -93,6 +94,8 @@ public class Menu {
             }
         }
     }
+
+
 
     private void addBooks(){
         System.out.println("Adding the book:");

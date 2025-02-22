@@ -4,6 +4,32 @@ import java.util.ArrayList;
 
 public class Functions {
 
+    public boolean checkUser(String username, String password)throws SQLException{
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try{
+            conn = Database.getConnection();
+            String query = "SELECT * FROM users WHERE username=? AND password=?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,username);
+            pstmt.setString(2,password);
+
+            rs = pstmt.executeQuery();
+
+            //om någon matchar gör ture
+            return rs.next();
+        }catch (SQLException e){
+            System.out.println("wrong password or username" + e.getMessage());
+            return false;
+        }finally {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
     public boolean removeBooks(int bookID) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
