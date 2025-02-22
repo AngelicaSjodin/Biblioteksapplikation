@@ -79,6 +79,42 @@ public class Functions {
         }
     }
 
+    public boolean borrowBook(int bookID,int userID)throws SQLException{
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        PreparedStatement updateStmt = null;
+
+        try{
+            conn = Database.getConnection();
+
+            //lägger in i loans att den är lånad
+            String loanQuery = "INSERT INTO loans (userID, bookID, borrowedDate) VALUES (?,?,?)";
+            pstmt = conn.prepareStatement(loanQuery);
+            pstmt.setInt(1,userID);
+            pstmt.setInt(2,bookID);
+            pstmt.setDate(3,new java.sql.Date(System.currentTimeMillis())); //datum boken lånades
+            int loanResult = pstmt.executeUpdate();//utför allt typ
+
+            //updaterar bokens status i library
+            String updateBBookStatus = "UPDATE books SET available =? WHERE id=?";
+            updateStmt = conn.prepareStatement(updateBBookStatus);
+            updateStmt.setBoolean(1,false);//gör den falsee
+            updateStmt.setInt(2,bookID);
+            int updateResult = updateStmt.executeUpdate();
+            return loanResult > 0 && updateResult >0; //ger värdet från både lånad i loans och bokens status i books
+
+        }catch (SQLException e){
+            System.out.println("Error while borrowing book"+e.getMessage());
+            return false;
+        }finally {
+            //stänger allt
+            if (pstmt != null) pstmt.close();
+            if (updateStmt != null) updateStmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
+
     public List<Books> viewAllBooks() throws SQLException{
         List<Books> bookList = new ArrayList<>();
         Connection conn = null;
