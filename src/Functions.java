@@ -4,6 +4,30 @@ import java.util.ArrayList;
 
 public class Functions {
 
+    public boolean removeBooks(int bookID) throws SQLException{
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try{
+            conn = Database.getConnection();
+            String query ="DELETE FROM books WHERE id = ?";
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,bookID);
+
+            int rowsAffected = pstmt.executeUpdate(); //Använder delete query
+
+            return rowsAffected > 0;
+
+        }catch (SQLException e){
+            System.out.println("failed to remove book" + e.getMessage());
+            return false;
+        }finally {
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
     public boolean addBook(String title, String author, boolean available) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
