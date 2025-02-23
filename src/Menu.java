@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Menu {
 
     private Scanner sc = new Scanner(System.in);
-    private Functions functions = new Functions();
+    private Methods functions = new Methods();
 
     public void loginMenu() throws SQLException {
         while(true){
