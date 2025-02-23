@@ -7,6 +7,7 @@ public class Menu {
     private Scanner sc = new Scanner(System.in);
     private Methods functions = new Methods();
 
+    //start meny
     public void loginMenu() throws SQLException {
         while(true){
             System.out.println("LOGIN AS:");
@@ -31,7 +32,7 @@ public class Menu {
         }
     }
 
-
+    //efter man loggat in som guest meny
     public void guestMenu(String username, Integer userID) throws SQLException {
         while (true) {
             System.out.println("Welcome to the library: "+username);
@@ -65,7 +66,7 @@ public class Menu {
     }
 
 
-
+    //efter man loggat in som admin meny
     private void adminMenu() throws SQLException {
         while (true) {
             System.out.println("Welcome to the library: admin");
@@ -94,6 +95,7 @@ public class Menu {
         }
     }
 
+    //nedanför är alla functioner
     private void guestLogin() throws SQLException{
         System.out.println("LOGIN");
         System.out.println("Username: ");
@@ -208,7 +210,7 @@ public class Menu {
             System.out.println("no available bookiess sorry");
         }else {
             for (Books book : books){
-                System.out.println("Id: "+book.getId()+" --- "+book);
+                System.out.println("Id: "+book.getId()+" --- "+book); //la till id snabbt
             }
         }
     }
