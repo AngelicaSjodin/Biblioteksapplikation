@@ -114,6 +114,40 @@ public class Functions {
         }
     }
 
+    public List<Books> getBorrowedBooks(int userID)throws SQLException{
+        List<Books> borrowedBooks=new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try{
+            conn = Database.getConnection();
+            String query = "SELECT b.id, b.title, b.author, b.available "+
+                    "FROM loans l "+
+                    "JOIN books b ON l.bookID = b.id "+
+                    "WHERE l.userID = ? AND l.returnDate IS NULL";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,userID);
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                int id =rs.getInt("id");
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                boolean available =rs.getBoolean("available");
+
+                Books book = new Books(id,title,author,available);
+                borrowedBooks.add(book);
+            }
+
+        }catch (SQLException e){
+            System.out.println("error"+e.getMessage());
+        }finally {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        }
+        return borrowedBooks;
+    }
 
     public List<Books> viewAllBooks() throws SQLException{
         List<Books> bookList = new ArrayList<>();
