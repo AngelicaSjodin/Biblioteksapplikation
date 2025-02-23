@@ -122,7 +122,10 @@ public class Functions {
 
         try{
             conn = Database.getConnection();
-            String query = "SELECT b.id, b.title, b.author, b.available FROM loans l JOIN books b ON l.bookID = b.id WHERE l.userID = ? AND l.returnDate IS NULL";
+            String query = "SELECT b.id, b.title, b.author, b.available "+
+                    "FROM loans l "+
+                    "JOIN books b ON l.bookID = b.id "+
+                    "WHERE l.userID = ? AND l.returnDate IS NULL";
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1,userID);
             rs = pstmt.executeQuery();
