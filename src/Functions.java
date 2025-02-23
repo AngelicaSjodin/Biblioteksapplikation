@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Functions {
 
-    public boolean checkUser(String username, String password)throws SQLException{
+    //checkUser gamla namn
+    public Integer getUserID(String username, String password)throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -18,11 +19,18 @@ public class Functions {
 
             rs = pstmt.executeQuery();
 
-            //om någon matchar gör ture
-            return rs.next();
+            if(rs.next()){
+                //om ett konto matchar, return deras userID
+                return rs.getInt("userID");
+            }else{
+                System.out.println("no matching user found");
+                return null;
+            }
+
+
         }catch (SQLException e){
             System.out.println("wrong password or username" + e.getMessage());
-            return false;
+            return null;
         }finally {
             if (rs != null) rs.close();
             if (pstmt != null) pstmt.close();

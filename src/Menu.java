@@ -32,7 +32,7 @@ public class Menu {
     }
 
 
-    public void guestMenu() throws SQLException {
+    public void guestMenu(Integer userID) throws SQLException {
         while (true) {
             System.out.println("Welcome to the library: guest");
             System.out.println("1. View all books");
@@ -48,13 +48,13 @@ public class Menu {
                     viewAllBooks();
                     break;
                 case "2":
-                    viewBorrowedBooks();
+                    viewBorrowedBooks(userID);
                     break;
                 case "3":
-                    borrowBook();
+                    borrowBook(userID);
                     break;
                 case "4":
-                    returnBooks();
+                    returnBooks(userID);
                     break;
                 case "0":
                     return;
@@ -102,10 +102,11 @@ public class Menu {
         System.out.println("password: ");
         String password = sc.nextLine();
 
-        boolean checkUser = functions.checkUser(username,password);
-        if(checkUser){
+
+        Integer userID = functions.getUserID(username,password);
+        if(userID != null){
             System.out.println("login successful :))");
-            guestMenu();
+            guestMenu(userID);
         }else{
             System.out.println("invalid name or password plz try again :(");
         }
@@ -153,11 +154,10 @@ public class Menu {
         }
     }
 
-    private void borrowBook(){
+    private void borrowBook(Integer userID){
         System.out.println("enter the id of the book you want to borrow");
 
         int bookID = Integer.parseInt(sc.nextLine());
-        int userID = 1;
 
         try{
             boolean success = functions.borrowBook(bookID,userID);
@@ -171,25 +171,23 @@ public class Menu {
         }
     }
 
-    private void viewBorrowedBooks()throws SQLException{
-        int userID =1;
-
+    private void viewBorrowedBooks(Integer userID)throws SQLException{
         List<Books>borrowedBooks =functions.getBorrowedBooks(userID);
 
         if(borrowedBooks.isEmpty()){
             System.out.println("you have not borrowed any books");
         }else{
             for(Books book:borrowedBooks){
-                System.out.println(book);
+                System.out.println("ID: "+book.getId()+" --- "+book);
             }
         }
     }
 
-    private void returnBooks(){
+    private void returnBooks(Integer userID){
         System.out.println("enter id of book you want to return:");
 
         int bookID =Integer.parseInt(sc.nextLine());
-        int userID = 1;//updaterar senare
+
 
         try{
             boolean success =functions.returnBook(bookID,userID);
@@ -210,7 +208,7 @@ public class Menu {
             System.out.println("no available bookiess sorry");
         }else {
             for (Books book : books){
-                System.out.println(book);
+                System.out.println("Id: "+book.getId()+" --- "+book);
             }
         }
     }
