@@ -149,6 +149,41 @@ public class Functions {
         return borrowedBooks;
     }
 
+    public boolean returnBook(int bookID,int userID)throws  SQLException{
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        PreparedStatement updateBookStatusStmt = null;
+        try{
+            conn = Database.getConnection();
+
+            //updaterar return date
+            String retirnBookQuery = "UPDATE loans SET returnDate = ? WHERE bookID = ? AND userID = ? AND returnDate IS NULL";
+            pstmt = conn.prepareStatement(retirnBookQuery);
+            pstmt.setDate(1, new java.sql.Date(System.currentTimeMillis()));
+            pstmt.setInt(2,bookID);
+            pstmt.setInt(3,userID);
+
+            int loanUpdateResult =pstmt.executeUpdate();
+
+            //gör boken available igen
+            String updateBookStatusQuery="UPDATE books SET available = ? WHERE id = ?";
+            updateBookStatusStmt= conn.prepareStatement(updateBookStatusQuery);
+            updateBookStatusStmt.setBoolean(1,true);//gör boken true här
+            updateBookStatusStmt.setInt(2,bookID);
+
+            int bookReturnUpdate = updateBookStatusStmt.executeUpdate();
+            return loanUpdateResult > 0 && bookReturnUpdate >0;
+
+        }catch (SQLException e){
+            System.out.println("error"+ e.getMessage());
+            return false;
+        }finally {
+            if (pstmt != null) pstmt.close();
+            if (updateBookStatusStmt != null) updateBookStatusStmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+
     public List<Books> viewAllBooks() throws SQLException{
         List<Books> bookList = new ArrayList<>();
         Connection conn = null;

@@ -54,7 +54,7 @@ public class Menu {
                     borrowBook();
                     break;
                 case "4":
-                    //returnBooks();
+                    returnBooks();
                     break;
                 case "0":
                     return;
@@ -182,6 +182,24 @@ public class Menu {
             for(Books book:borrowedBooks){
                 System.out.println(book);
             }
+        }
+    }
+
+    private void returnBooks(){
+        System.out.println("enter id of book you want to return:");
+
+        int bookID =Integer.parseInt(sc.nextLine());
+        int userID = 1;//updaterar senare
+
+        try{
+            boolean success =functions.returnBook(bookID,userID);
+            if(success){
+                System.out.println("thank you for returning the book!!");
+            }else{
+                System.out.println("failed to return book, try again?");
+            }
+        }catch (SQLException e){
+            System.out.println("error "+ e.getMessage());
         }
     }
 
