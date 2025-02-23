@@ -32,9 +32,9 @@ public class Menu {
     }
 
 
-    public void guestMenu(Integer userID) throws SQLException {
+    public void guestMenu(String username, Integer userID) throws SQLException {
         while (true) {
-            System.out.println("Welcome to the library: guest");
+            System.out.println("Welcome to the library: "+username);
             System.out.println("1. View all books");
             System.out.println("2. View borrowed books");
             System.out.println("3. Borrow books");
@@ -106,7 +106,7 @@ public class Menu {
         Integer userID = functions.getUserID(username,password);
         if(userID != null){
             System.out.println("login successful :))");
-            guestMenu(userID);
+            guestMenu(username,userID);
         }else{
             System.out.println("invalid name or password plz try again :(");
         }
