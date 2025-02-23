@@ -48,7 +48,7 @@ public class Menu {
                     viewAllBooks();
                     break;
                 case "2":
-                    //viewBorrowedBooks
+                    viewBorrowedBooks();
                     break;
                 case "3":
                     borrowBook();
@@ -168,6 +168,20 @@ public class Menu {
             }
         }catch (SQLException e){
             System.out.println("error "+ e.getMessage());
+        }
+    }
+
+    private void viewBorrowedBooks()throws SQLException{
+        int userID =1;
+
+        List<Books>borrowedBooks =functions.getBorrowedBooks(userID);
+
+        if(borrowedBooks.isEmpty()){
+            System.out.println("you have not borrowed any books");
+        }else{
+            for(Books book:borrowedBooks){
+                System.out.println(book);
+            }
         }
     }
 
