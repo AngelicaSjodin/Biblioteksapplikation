@@ -2,9 +2,9 @@ import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Functions {
+public class Methods {
 
-    //checkUser gamla namn
+    //logga in på användare/kollar användrae
     public Integer getUserID(String username, String password)throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -38,6 +38,7 @@ public class Functions {
         }
     }
 
+    //för admin att ta bort böcker ur bibloteket
     public boolean removeBooks(int bookID) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -62,6 +63,7 @@ public class Functions {
         }
     }
 
+    //för admin att lägga till böcker i bibloteket
     public boolean addBook(String title, String author, boolean available) throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -87,6 +89,7 @@ public class Functions {
         }
     }
 
+    //för användare att kunna låna böcker
     public boolean borrowBook(int bookID,int userID)throws SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -141,6 +144,7 @@ public class Functions {
         }
     }
 
+    //för användare att kunna se deras lånade böcker
     public List<Books> getBorrowedBooks(int userID)throws SQLException{
         List<Books> borrowedBooks=new ArrayList<>();
         Connection conn = null;
@@ -176,6 +180,7 @@ public class Functions {
         return borrowedBooks;
     }
 
+    //för användare att kunna lämna tillbaka lånade böcker
     public boolean returnBook(int bookID,int userID)throws  SQLException{
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -211,6 +216,7 @@ public class Functions {
         }
     }
 
+    //för admin och användare att kunna se alla böcker i bibloteket
     public List<Books> viewAllBooks() throws SQLException{
         List<Books> bookList = new ArrayList<>();
         Connection conn = null;

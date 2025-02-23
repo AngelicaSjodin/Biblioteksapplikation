@@ -1,0 +1,57 @@
+här är min mysql databas:
+create database biblotekdatabase;
+
+create table books(
+id int auto_increment primary key,
+title varchar(100) not null,
+author varchar(100) not null,
+available boolean not null
+);
+
+INSERT INTO books (title, author,available) VALUES ('Manga book', 'Manga Man',true);
+INSERT INTO books (title,author,available) VALUES ('Action book', 'James Bond',true);
+
+
+create table users(
+userID int auto_increment primary key,
+username  varchar(100) not null unique,
+password varchar(100) not null
+);
+
+INSERT INTO users (username, password) VALUES ('angelica', 'awds');
+INSERT INTO users (username, password) VALUES ('kiki', '123');
+
+create table loans(
+	loanID int auto_increment primary key,
+    userID int,
+    bookID int,
+    borrowedDate date,
+    returnDate date,
+    foreign key (userID) references users(userID),
+    foreign key (bookID) references books(id)
+);
+
+select * from books;
+select * from loans;
+select * from users;
+
+---------------------------------------------------------------------------------------------------------------------------
+
+OBS: går inte att göra ett konto genom programmet men la till två konton gwnom mysql:
+Användarnamn: angelica Lösenord: awds
+Användarnamn: kiki Lösenord: 123
+
+kort beskrivning hur programmet körs:
+Man kommer först till en inloggnings meny där man kan logga in som antingne guest eller admin.
+Om man väljer guest måste man ha lösenord och användarnamn, admin behöver man inte bara för lätthetens skull.
+
+Efter man loggat in som guest tas man till guest menyn där man kan välja olika guest functioner att utföra som t ex. låna bok och lämna tillbaka bok.
+Under menyn i koden finns functionerna, dem functionerna tar sedan yttligare info från skapade metoder från en anna klass vid namn Methods.
+
+Metoderna är uppbyggda med att ha:
+Kontakt med mysql databasen genom Database.getConnection().
+Använda Prepared Statement, sql query som innehåller kod som säger till databasen vad som ska göras/ändras.
+query execution, slltså utföra det sagda queryt med pstmt.executeQuery().
+ResultSet,kollar metoden hittar det den söker efter typ.
+error handeling, om man skriver in fel eller inte hittar deet den söker efter används catch SQLException.
+
