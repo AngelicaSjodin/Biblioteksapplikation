@@ -91,11 +91,30 @@ public class Functions {
         Connection conn = null;
         PreparedStatement pstmt = null;
         PreparedStatement updateStmt = null;
+        ResultSet rs = null;
 
         try{
             conn = Database.getConnection();
 
-            //lägger in i loans att den är lånad
+            //kollar först om boken är available
+            String checkAvailabilityQuery ="SELECT available FROM books WHERE id = ?";
+            pstmt = conn.prepareStatement(checkAvailabilityQuery);
+            pstmt.setInt(1,bookID);
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                boolean available = rs.getBoolean("available");
+                if(!available){
+                    System.out.println("books is borrowed by someone else");
+                    return false;
+                }
+            }else{
+                System.out.println("boom not found");
+                return false;
+            }
+
+
+            //om available så lägger in bopken i loans att den är lånad
             String loanQuery = "INSERT INTO loans (userID, bookID, borrowedDate) VALUES (?,?,?)";
             pstmt = conn.prepareStatement(loanQuery);
             pstmt.setInt(1,userID);
